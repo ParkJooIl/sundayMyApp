@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translate="false">MyApp</string>
+    <string name="action_settings" translate="false">Settings</string>
+    <string name="hello_world" translate="false">Hello world!</string>
+    <string name="SizeText" translate="false">A</string>
+    <string name="SoutcoutMake">This app would create a "shortcut" on your desktop?</string>
+    <string name="alert_cancle" translate="false">Cancle</string>
+    <string name="alert_No" translate="false">No</string>
+    <string name="alert_Yes" translate="false">Yes</string>
+    <string name="STT_alert_ERROR_AUDIO">There was an error in the audio input.</string>
+    <string name="STT_alert_ERROR_CLIENT">An error occurred in the terminal.</string>
+    <string name="STT_alert_ERROR_INSUFFICIENT_PERMISSIONS">You do not have permission.</string>
+    <string name="STT_alert_ERROR_NETWORK_TIMEOUT">A network error occurred.</string>
+    <string name="STT_alert_ERROR_NO_MATCH">No matching Apps.</string>
+    <string name="STT_alert_ERROR_ERROR_RECOGNIZER_BUSY">Voice recognition service has been overload.</string>
+    <string name="STT_alert_ERROR_ERROR_SERVER">An error has occurred on the server.</string>
+    <string name="STT_alert_ERROR_SPEECH_TIMEOUT">You can not enter.</string>
+
+</resources>

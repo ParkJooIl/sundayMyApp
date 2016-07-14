@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffffff"
+        android:orientation="horizontal" >
+        
+    <RadioGroup
+        android:id="@+id/radioGroup_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/radio0"
+            android:layout_width="@dimen/optionmenu_textButton"
+            android:layout_height="@dimen/optionmenu_textButton"
+            android:background="@drawable/selector_radiobutton"
+            android:button="@color/black"
+            android:checked="true"
+            android:gravity="center"
+            android:text="@string/SizeText"
+            android:textSize="18dp" />
+
+        <RadioButton
+            android:id="@+id/radio1"
+            android:layout_width="@dimen/optionmenu_textButton"
+            android:layout_height="@dimen/optionmenu_textButton"
+            android:background="@drawable/selector_radiobutton"
+            android:button="@color/black"
+            android:gravity="center"
+            android:text="@string/SizeText"
+            android:textSize="24dp" />
+
+        <RadioButton
+            android:id="@+id/radio2"
+            android:layout_width="@dimen/optionmenu_textButton"
+            android:layout_height="@dimen/optionmenu_textButton"
+            android:background="@drawable/selector_radiobutton"
+            android:button="@color/black"
+            android:gravity="center"
+            android:text="@string/SizeText"
+            android:textSize="26dp" />
+    </RadioGroup>
+
+    <Switch
+        android:id="@+id/switchchanger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

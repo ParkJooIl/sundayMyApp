@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+
+    <string name="app_name" translate="false" />
+    <string name="action_settings" translate="false" />
+    <string name="hello_world" />
+    <string name="SizeText" translate="false" />
+    <string name="SoutcoutMake" />
+    <string name="alert_cancle" translate="false" />
+    <string name="alert_No" translate="false" />
+    <string name="alert_Yes" translate="false" />
+    <string name="STT_alert_ERROR_AUDIO">オーディオ入力中にエラーが発生しました</string>
+    <string name="STT_alert_ERROR_CLIENT">端末でエラーが発生しました。</string>
+    <string name="STT_alert_ERROR_INSUFFICIENT_PERMISSIONS">権限がありません。</string>
+    <string name="STT_alert_ERROR_NETWORK_TIMEOUT">ネットワークエラーが発生しました。</string>
+    <string name="STT_alert_ERROR_NO_MATCH">一致する項目がありません。</string>
+    <string name="STT_alert_ERROR_ERROR_RECOGNIZER_BUSY">音声認識サービスが過負荷されました。</string>
+    <string name="STT_alert_ERROR_ERROR_SERVER">サーバーでエラーが発生しました。</string>
+    <string name="STT_alert_ERROR_SPEECH_TIMEOUT">入力ができません。</string>
+
+</resources>
