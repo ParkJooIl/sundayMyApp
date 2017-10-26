@@ -7,7 +7,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Parcelable;
+import android.os.PowerManager;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.sundayfactory.testwizet.core.AppInfo;
 
 /**
  * Created by jipark on 2017-10-23.
@@ -15,16 +19,41 @@ import android.util.Log;
 
 public class AppUtils {
     /**
-     * 1. 화면이 켜져 있는상태 확인
-     * 2. 실행중인 앱 확인
+     * 화면 켜짐상태
+     * @param c
+     * @return
      */
-    public static void NowForeGroundAppCheck(Context c){
+    public static boolean isScreenOnOff(Context c){
+        PowerManager pm = (PowerManager) c.getSystemService(Context.POWER_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= 20){
+            if (pm.isInteractive()){
+                return true;
+            }else {
+                return false;
+            }
+        }else if (android.os.Build.VERSION.SDK_INT < 20){
+            if (pm.isScreenOn()){
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+    /**
+     *  실행중인 앱 확인
+     */
+    public static AppInfo NowForeGroundAppCheck(Context c){
         ActivityManager AM = (ActivityManager)c.getSystemService(Context.ACTIVITY_SERVICE);
+        AppInfo appInfo = new AppInfo();
         if(Build.VERSION.SDK_INT > 20){
           ActivityManager.RunningAppProcessInfo info =  AM.getRunningAppProcesses().get(0);
+            appInfo.Package = info.processName;
         }else{
-            AM.getRunningTasks(0).get(0).topActivity.getPackageName();
+            appInfo.Package =  AM.getRunningTasks(0).get(0).topActivity.getPackageName();
         }
+       return appInfo;
     }
     /*public static void addShortcut(Context context, String Classname) {
         Log.i("park", "addShortcut + " + Classname);
