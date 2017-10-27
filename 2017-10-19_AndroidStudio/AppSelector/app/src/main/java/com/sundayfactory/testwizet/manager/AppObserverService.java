@@ -31,12 +31,15 @@ public class AppObserverService extends Service {
                 _Handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(AppObserverService.this ,"NowForeGroundAppCheck:" + AppUtils.NowForeGroundAppCheck(AppObserverService.this) , Toast.LENGTH_LONG ).show();
+                        String PackageName = AppUtils.NowForeGroundAppCheck(AppObserverService.this).Package;
+                        Toast.makeText(AppObserverService.this ,"NowForeGroundAppCheck:" +  PackageName, Toast.LENGTH_LONG ).show();
+                        Log.i(tag , "NowForeGroundAppCheck : " + PackageName);
+
                     }
                 });
-                Log.e(tag , "NowForeGroundAppCheck on");
+                Log.i(tag , "NowForeGroundAppCheck on");
             }else{
-                Log.e(tag , "NowForeGroundAppCheck off");
+                Log.i(tag , "NowForeGroundAppCheck off");
             }
         }
     };

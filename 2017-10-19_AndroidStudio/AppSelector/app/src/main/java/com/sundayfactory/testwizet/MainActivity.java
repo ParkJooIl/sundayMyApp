@@ -2,9 +2,11 @@ package com.sundayfactory.testwizet;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.AppOpsManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -24,6 +26,7 @@ import android.widget.TextView;
 
 import com.sundayfactory.testwizet.manager.AppObserverService;
 import com.sundayfactory.testwizet.receiver.IntentReceiver;
+import com.sundayfactory.testwizet.utils.permissionUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+
+    private permissionUtils _pu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        _pu = new permissionUtils(this);
+
+
+
         Intent ServiceCheck = new Intent(this , AppObserverService.class);
         startService(ServiceCheck);
 
@@ -168,5 +179,12 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+    private void CallPermission(){
+        // 어떤 권한을 호출해야 하나 ?
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

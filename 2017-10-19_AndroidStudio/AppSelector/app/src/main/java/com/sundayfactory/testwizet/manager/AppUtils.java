@@ -18,6 +18,7 @@ import com.sundayfactory.testwizet.core.AppInfo;
  */
 
 public class AppUtils {
+    private final static String tag = "AppUtils";
     /**
      * 화면 켜짐상태
      * @param c
@@ -45,14 +46,28 @@ public class AppUtils {
      *  실행중인 앱 확인
      */
     public static AppInfo NowForeGroundAppCheck(Context c){
-        ActivityManager AM = (ActivityManager)c.getSystemService(Context.ACTIVITY_SERVICE);
         AppInfo appInfo = new AppInfo();
-        if(Build.VERSION.SDK_INT > 20){
-          ActivityManager.RunningAppProcessInfo info =  AM.getRunningAppProcesses().get(0);
-            appInfo.Package = info.processName;
+        if(Build.VERSION.SDK_INT >= 21){
+
         }else{
-            appInfo.Package =  AM.getRunningTasks(0).get(0).topActivity.getPackageName();
+            ActivityManager AM = (ActivityManager)c.getSystemService(Context.ACTIVITY_SERVICE);
+
+            if(Build.VERSION.SDK_INT > 20){
+                ActivityManager.RunningAppProcessInfo info =  AM.getRunningAppProcesses().get(0);
+                appInfo.Package = info.processName;
+                Log.d(tag, "NowForeGroundAppCheck Count : " + AM.getRunningAppProcesses().size());
+                for (ActivityManager.RunningAppProcessInfo appProcess : AM.getRunningAppProcesses()) {
+                    Log.d(tag, "NowForeGroundAppCheck: " + appProcess.processName);
+                    Log.d(tag, "NowForeGroundAppCheck: " + appProcess.importance);
+
+                }
+
+
+            }else{
+                appInfo.Package =  AM.getRunningTasks(0).get(0).topActivity.getPackageName();
+            }
         }
+
        return appInfo;
     }
     /*public static void addShortcut(Context context, String Classname) {
