@@ -2,6 +2,8 @@ package com.sundayfactory.testwizet.manager;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +14,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.sundayfactory.testwizet.core.AppInfo;
+import com.sundayfactory.testwizet.utils.FileLog;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by jipark on 2017-10-23.
@@ -47,26 +54,44 @@ public class AppUtils {
      */
     public static AppInfo NowForeGroundAppCheck(Context c){
         AppInfo appInfo = new AppInfo();
-        if(Build.VERSION.SDK_INT >= 21){
 
-        }else{
             ActivityManager AM = (ActivityManager)c.getSystemService(Context.ACTIVITY_SERVICE);
 
-            if(Build.VERSION.SDK_INT > 20){
-                ActivityManager.RunningAppProcessInfo info =  AM.getRunningAppProcesses().get(0);
+            if(Build.VERSION.SDK_INT > 21){
+/*                ActivityManager.RunningAppProcessInfo info =  AM.getRunningAppProcesses().get(0);
                 appInfo.Package = info.processName;
                 Log.d(tag, "NowForeGroundAppCheck Count : " + AM.getRunningAppProcesses().size());
                 for (ActivityManager.RunningAppProcessInfo appProcess : AM.getRunningAppProcesses()) {
                     Log.d(tag, "NowForeGroundAppCheck: " + appProcess.processName);
                     Log.d(tag, "NowForeGroundAppCheck: " + appProcess.importance);
+usagestatsmanager
+                }*/
+                UsageStatsManager USM = (UsageStatsManager)c.getSystemService(Context.USAGE_STATS_SERVICE);
+                List<UsageStats> UsageApps = USM.queryUsageStats(UsageStatsManager.INTERVAL_BEST , System.currentTimeMillis() - 60000, System.currentTimeMillis());
+                SimpleDateFormat sdflog = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss");
+                if(UsageApps != null && UsageApps.size() > 0){
+                    FileLog.fLog("===============================================================");
+                    StringBuilder log = new StringBuilder();
+                    for(UsageStats item : UsageApps){
+                        log.append(item.getPackageName() + ":describeContents[" + item.describeContents() + "]getLastTimeStamp["+sdflog.format(new Date(item.getLastTimeStamp())) + "]getLastTimeUsed["+sdflog.format(new Date(item.getLastTimeUsed()))  + "]getTotalTimeInForeground[" + sdflog.format(new Date(item.getTotalTimeInForeground())));
+                        log.append("\n");
+                    }
+                    FileLog.fLog(log.toString());
 
+
+                    Log.i(tag , "UsageApps.size(" + UsageApps.size() +")");
+                    appInfo.Package = UsageApps.get(UsageApps.size()-1).getPackageName() + "[" + UsageApps.size() + "]";
+                }else{
+                    FileLog.fLog("===================NULL============================================");
+
+                    appInfo.Package = "NULL";
                 }
 
 
             }else{
                 appInfo.Package =  AM.getRunningTasks(0).get(0).topActivity.getPackageName();
             }
-        }
+
 
        return appInfo;
     }

@@ -2,6 +2,8 @@ package com.sundayfactory.testwizet;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,10 +28,11 @@ import android.widget.TextView;
 
 import com.sundayfactory.testwizet.manager.AppObserverService;
 import com.sundayfactory.testwizet.receiver.IntentReceiver;
+import com.sundayfactory.testwizet.utils.Log;
 import com.sundayfactory.testwizet.utils.permissionUtils;
 
 public class MainActivity extends AppCompatActivity {
-
+    private final String TAG = "MainActivity";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -72,11 +75,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
+        // 퍼미션 체크
         _pu = new permissionUtils(this);
+        Log.i(TAG , "UserDeniedCheck[" + _pu.UserDeniedCheck());
+        Log.i(TAG , "Checkpermissions[" + _pu.Checkpermissions());
+            _pu.orderPermission(this);
 
-
-
+        startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
         Intent ServiceCheck = new Intent(this , AppObserverService.class);
         startService(ServiceCheck);
 
@@ -180,11 +185,32 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-    private void CallPermission(){
-        // 어떤 권한을 호출해야 하나 ?
-    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.i(TAG , "onRequestPermissionsResult requestCode["  + requestCode+"]");
+        switch (requestCode) {
+            case permissionUtils.PerMissionResultCode: {
+                // If request is cancelled, the result arrays are empty.
+                for(int result : grantResults){
+                    Log.i(TAG , "grantResults[" + result + "]");
+                }
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }

@@ -1,8 +1,11 @@
 package com.sundayfactory.testwizet.utils;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
 /**
@@ -12,9 +15,10 @@ import android.support.v4.content.ContextCompat;
  */
 
 public class permissionUtils {
-
+    public final static int PerMissionResultCode = 1;
     private Context c;
-    private String[] Permissions = new String[]{Manifest.permission.PACKAGE_USAGE_STATS , Manifest.permission.BIND_ACCESSIBILITY_SERVICE};
+    private String[] Permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE /*, Manifest.permission.BIND_ACCESSIBILITY_SERVICE*/};
+
     public permissionUtils(Context c){
 
         this.c = c;
@@ -32,6 +36,18 @@ public class permissionUtils {
     }
 
     /**
+     * 사용자가 취소한 권한 체크
+     * @return null
+     */
+    public String UserDeniedCheck(){
+        for(String item : Permissions){
+            if(ActivityCompat.shouldShowRequestPermissionRationale((Activity)c , item)){
+                return item;
+            }
+        }
+        return null;
+    }
+    /**
      * 거부한 권한의 이름 반환
      * @return
      */
@@ -43,5 +59,8 @@ public class permissionUtils {
         }
         return "";
     }
+    public void orderPermission(Activity a){
+        ActivityCompat.requestPermissions(a , Permissions , PerMissionResultCode);
 
+    }
 }
