@@ -1,5 +1,7 @@
 package com.sundayfactory.testwizet.core;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * Created by jipark on 2017-10-23.
  * 앱 정보
@@ -18,4 +20,5 @@ public class AppInfo {
     public long lastTimeStamp = 0;
     public long lastTimeUses = 0;
     public long TotalTimeInForeground = 0;
+    public Drawable icon ;
 }

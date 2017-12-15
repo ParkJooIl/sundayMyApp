@@ -6,6 +6,7 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Parcelable;
@@ -74,6 +75,11 @@ public class AppUtils {
                             appInfo.lastTimeUses = item.getLastTimeUsed();
                             appInfo.TotalTimeInForeground = item.getTotalTimeInForeground();
                             appInfo.Package = item.getPackageName();
+                            try {
+                                appInfo.icon = c.getPackageManager().getApplicationIcon(item.getPackageName());
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                             AppInfos.add(appInfo);
                         }
                     }

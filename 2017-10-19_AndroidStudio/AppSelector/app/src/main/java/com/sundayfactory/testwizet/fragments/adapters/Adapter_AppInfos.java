@@ -50,16 +50,13 @@ public class Adapter_AppInfos extends RecyclerView.Adapter<Adapter_AppInfos.View
         holder.tv_lastTimeStamp.setText(dateFormat.format(new Date(item.lastTimeStamp)));
         holder.tv_lastTimeUses.setText(dateFormat.format(new Date(item.lastTimeUses)));
         holder.tv_TotalTimeInForeground.setText(dateFormat.format(new Date(item.TotalTimeInForeground)));
-        try {
-            Drawable icon = mActivity.getPackageManager().getApplicationIcon(item.Package);
-            holder.iv_Icon.setImageDrawable(icon);
-        }catch (Exception e){
-            e.printStackTrace();
+        if(item.icon != null){
+            holder.iv_Icon.setImageDrawable(item.icon);
         }
 
     }
     public void CustomUpdatelist(List<AppInfo> infos){
-        Infos.clear();;
+        Infos.clear();
         Infos.addAll(infos);
         notifyDataSetChanged();
     }
