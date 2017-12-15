@@ -76,7 +76,7 @@ public class FileLog {
             folder.mkdir();
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        File log = new File(folder , "CremaSoundLog_"+sdf.format(new Date(System.currentTimeMillis())));
+        File log = new File(folder , "CremaSoundLog_"+sdf.format(new Date(System.currentTimeMillis()))+".txt");
         if(!log.exists()){
             try {
                 log.createNewFile();

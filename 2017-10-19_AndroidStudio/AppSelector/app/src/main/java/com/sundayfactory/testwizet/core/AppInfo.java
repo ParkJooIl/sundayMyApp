@@ -15,4 +15,7 @@ public class AppInfo {
      */
     public String Package = "";
 
+    public long lastTimeStamp = 0;
+    public long lastTimeUses = 0;
+    public long TotalTimeInForeground = 0;
 }

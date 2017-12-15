@@ -17,6 +17,7 @@ import com.sundayfactory.testwizet.core.AppInfo;
 import com.sundayfactory.testwizet.utils.FileLog;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,48 +53,36 @@ public class AppUtils {
     /**
      *  실행중인 앱 확인
      */
-    public static AppInfo NowForeGroundAppCheck(Context c){
-        AppInfo appInfo = new AppInfo();
+    public static  List<AppInfo>  NowForeGroundAppCheck(Context c){
 
-            ActivityManager AM = (ActivityManager)c.getSystemService(Context.ACTIVITY_SERVICE);
+        List<AppInfo> AppInfos = new ArrayList<>();
 
-            if(Build.VERSION.SDK_INT > 21){
-/*                ActivityManager.RunningAppProcessInfo info =  AM.getRunningAppProcesses().get(0);
-                appInfo.Package = info.processName;
-                Log.d(tag, "NowForeGroundAppCheck Count : " + AM.getRunningAppProcesses().size());
-                for (ActivityManager.RunningAppProcessInfo appProcess : AM.getRunningAppProcesses()) {
-                    Log.d(tag, "NowForeGroundAppCheck: " + appProcess.processName);
-                    Log.d(tag, "NowForeGroundAppCheck: " + appProcess.importance);
-usagestatsmanager
-                }*/
+
+
                 UsageStatsManager USM = (UsageStatsManager)c.getSystemService(Context.USAGE_STATS_SERVICE);
                 List<UsageStats> UsageApps = USM.queryUsageStats(UsageStatsManager.INTERVAL_BEST , System.currentTimeMillis() - 60000, System.currentTimeMillis());
-                SimpleDateFormat sdflog = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss");
                 if(UsageApps != null && UsageApps.size() > 0){
-                    FileLog.fLog("===============================================================");
-                    StringBuilder log = new StringBuilder();
+                    AppInfo appInfo = new AppInfo();
+
+
                     for(UsageStats item : UsageApps){
-                        log.append(item.getPackageName() + ":describeContents[" + item.describeContents() + "]getLastTimeStamp["+sdflog.format(new Date(item.getLastTimeStamp())) + "]getLastTimeUsed["+sdflog.format(new Date(item.getLastTimeUsed()))  + "]getTotalTimeInForeground[" + sdflog.format(new Date(item.getTotalTimeInForeground())));
-                        log.append("\n");
+                        appInfo = new AppInfo();
+
+
+                        if(item.getTotalTimeInForeground() > 0 ){
+                            appInfo.lastTimeStamp = item.getLastTimeStamp();
+                            appInfo.lastTimeUses = item.getLastTimeUsed();
+                            appInfo.TotalTimeInForeground = item.getTotalTimeInForeground();
+                            appInfo.Package = item.getPackageName();
+                            AppInfos.add(appInfo);
+                        }
                     }
-                    FileLog.fLog(log.toString());
-
-
-                    Log.i(tag , "UsageApps.size(" + UsageApps.size() +")");
-                    appInfo.Package = UsageApps.get(UsageApps.size()-1).getPackageName() + "[" + UsageApps.size() + "]";
                 }else{
-                    FileLog.fLog("===================NULL============================================");
-
-                    appInfo.Package = "NULL";
                 }
 
 
-            }else{
-                appInfo.Package =  AM.getRunningTasks(0).get(0).topActivity.getPackageName();
-            }
 
-
-       return appInfo;
+       return AppInfos;
     }
     /*public static void addShortcut(Context context, String Classname) {
         Log.i("park", "addShortcut + " + Classname);

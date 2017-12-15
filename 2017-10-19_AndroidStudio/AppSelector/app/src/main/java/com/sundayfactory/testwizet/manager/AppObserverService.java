@@ -22,39 +22,15 @@ import java.util.TimerTask;
 public class AppObserverService extends Service {
     private final String tag = "AppObserverService";
     private Handler _Handler = new Handler();
-    private Timer _AppObserverTimer;
-    private TimerTask _AppObserverTask = new TimerTask() {
-        @Override
-        public void run() {
-            if(AppUtils.isScreenOnOff(AppObserverService.this)){
 
-                _Handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        String PackageName = AppUtils.NowForeGroundAppCheck(AppObserverService.this).Package;
-                        Toast.makeText(AppObserverService.this ,"NowForeGroundAppCheck:" +  PackageName, Toast.LENGTH_LONG ).show();
-                        Log.i(tag , "NowForeGroundAppCheck : " + PackageName);
 
-                    }
-                });
-                Log.i(tag , "NowForeGroundAppCheck on");
-            }else{
-                Log.i(tag , "NowForeGroundAppCheck off");
-            }
-        }
-    };
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(tag , "onStartCommand");
-        startObserver();
+
         return Service.START_STICKY;
     }
-    private void startObserver(){
-        if(_AppObserverTimer == null){
-            _AppObserverTimer = new Timer();
-            _AppObserverTimer.schedule(_AppObserverTask , 1000 , 30000);
-        }
-    }
+
 
 
     @Nullable
